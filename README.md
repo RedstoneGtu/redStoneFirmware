@@ -28,4 +28,21 @@ Service UUID: "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
  
 4th Sensor UUID: "89659652-bfcf-11ec-9d64-0242ac120002"
  
-5th Sensor UUID: "89659792-bfcf-11ec-9d64-0242ac120002"  
+5th Sensor UUID: "89659792-bfcf-11ec-9d64-0242ac120002"
+
+# Arduino Settings
+
+## Board Installation on Arduino
+
+Preferences > Additional Boards Manager URLs:
+> https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+
+Save OK.
+
+Tools > Board > Boards Manager
+
+Search for "esp 32". Install first.
+
+## Board Selection
+
+Tools > Board > ESP32 Arduino > "DOIT ESP32 DEVKIT V1"
