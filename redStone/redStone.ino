@@ -2,16 +2,15 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 
-#define SENSOR_COUNT (5)
+#define SENSOR_COUNT (4)
 
-const int SENSOR_PINS[SENSOR_COUNT] = {34, 35, 32, 33, 25};
+const int SENSOR_PINS[SENSOR_COUNT] = {34, 35, 32, 33};
 const char *SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const char *SENSOR_CHARACTERISTIC_UUIDS[SENSOR_COUNT] = {
   "89659080-bfcf-11ec-9d64-0242ac120002",
   "8965938c-bfcf-11ec-9d64-0242ac120002",
   "89659508-bfcf-11ec-9d64-0242ac120002",
-  "89659652-bfcf-11ec-9d64-0242ac120002",
-  "89659792-bfcf-11ec-9d64-0242ac120002"  
+  "89659652-bfcf-11ec-9d64-0242ac120002"
 };
 
 BLEServer *pServer;
