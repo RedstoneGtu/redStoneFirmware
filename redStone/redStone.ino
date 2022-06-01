@@ -44,10 +44,10 @@ void loop() {
   uint32_t vals[SENSOR_COUNT] = {0};
   for (int i = 0; i < SENSOR_COUNT; ++i) {
     vals[i] = analogRead(SENSOR_PINS[i]);
-    pCharacteristics[i]->setValue(vals[i]);
+    pCharacteristics[i]->setValue(std::string(String(vals[i]).c_str()));
     Serial.print(vals[i]);
     Serial.print(",");
   }
   Serial.println(" ");
-  delay(50);
+  delay(20);
 }
