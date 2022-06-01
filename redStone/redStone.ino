@@ -6,17 +6,12 @@
 
 const int SENSOR_PINS[SENSOR_COUNT] = {34, 35, 32, 33};
 const char *SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-const char *SENSOR_CHARACTERISTIC_UUIDS[SENSOR_COUNT] = {
-  "89659080-bfcf-11ec-9d64-0242ac120002",
-  "8965938c-bfcf-11ec-9d64-0242ac120002",
-  "89659508-bfcf-11ec-9d64-0242ac120002",
-  "89659652-bfcf-11ec-9d64-0242ac120002"
-};
+const char *SENSOR_CHARACTERISTIC_UUID = "89659080-bfcf-11ec-9d64-0242ac120002";
 
 BLEServer *pServer;
 BLEService *pService;
 BLEAdvertising *pAdvertising;
-BLECharacteristic *pCharacteristics[SENSOR_COUNT];
+BLECharacteristic *pCharacteristics;
 
 void setup() {
   Serial.begin(115200);
@@ -24,12 +19,7 @@ void setup() {
   
   pServer = BLEDevice::createServer();
   pService = pServer->createService(SERVICE_UUID);
-  for (int i = 0; i < SENSOR_COUNT; ++i) {
-    pCharacteristics[i] = pService->createCharacteristic(
-      SENSOR_CHARACTERISTIC_UUIDS[i],
-      BLECharacteristic::PROPERTY_READ
-    );
-  }
+  pCharacteristics = pService->createCharacteristic(SENSOR_CHARACTERISTIC_UUID, BLECharacteristic::PROPERTY_READ);
   pService->start();
   
   pAdvertising = BLEDevice::getAdvertising();
@@ -42,12 +32,14 @@ void setup() {
 
 void loop() {
   uint32_t vals[SENSOR_COUNT] = {0};
-  for (int i = 0; i < SENSOR_COUNT; ++i) {
-    vals[i] = analogRead(SENSOR_PINS[i]);
-    pCharacteristics[i]->setValue(std::string(String(vals[i]).c_str()));
-    Serial.print(vals[i]);
-    Serial.print(",");
+  String temp = "";  
+  for(int j = 0; j < SENSOR_COUNT; j++){
+    temp += analogRead(SENSOR_PINS[j]);
+    if(j != SENSOR_COUNT-1)
+      temp += ",";
   }
-  Serial.println(" ");
+  pCharacteristics->setValue(std::string(String(temp).c_str()));
+  Serial.print(temp);
+  Serial.println("");
   delay(20);
 }
