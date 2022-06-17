@@ -5,10 +5,11 @@
 #include "FFT.h"
 
 #define SENSOR_COUNT (4)
-#define FFT_N (2048)
+#define FFT_N (256)
 #define TOTAL_TIME (126.0f)
 #define FFT_TIME (10.5f)
-#define DELAY_MS (5127) // FFT_TIME // FFT_N
+
+const unsigned int DELAY_MS = (1000 * FFT_TIME) / (unsigned int)FFT_N;
 
 struct FFT_Helper {
   fft_config_t *plan;
