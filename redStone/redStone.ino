@@ -51,9 +51,12 @@ void ble_setup() {
 void write_ble() {
   String temp = "";  
   for(int j = 0; j < SENSOR_COUNT; ++j) {
-    for (int i = 0; i < FFT_N; ++i) {
-      temp += analogRead(SENSOR_PINS[j]);
-      if(FFT_N - 1 != i) {
+    temp += fft_helper[j].output[0];
+    temp += ",";
+    for (int k = 1 ; k < fft_helper[j].plan->size / 2; ++k) {
+      int mag = sqrt(pow(fft_helper[j].output[2 * k], 2) + pow(fft_helper[j].output[2 * k + 1], 2));
+      temp += mag;
+      if(fft_helper[j].plan->size / 2 - 1 != k) {
         temp += ",";
       }
     }
@@ -79,6 +82,9 @@ void fft_destroy() {
 void setup() {
   Serial.begin(115200);
   ble_setup();
+  while (0 == pServer->getConnectedCount()) {
+    delay(1);
+  }
   last_time = micros() - DELAY_MS;
 }
 
